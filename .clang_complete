@@ -1,0 +1,13 @@
+-I../../include
+-I../include
+-Iinclude
+-isystem../../external/GSL/include
+-isystem../external/GSL/include
+-isystemexternal/GSL/include
+-pedantic
+-std=c++17
+-Wall
+-Wcast-qual
+-Wconversion
+-Wextra
+-Wshadow
