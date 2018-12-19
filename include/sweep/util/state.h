@@ -41,6 +41,7 @@
 #include <functional>
 #include <iosfwd>
 #include <optional>
+#include <stdexcept>
 #include <utility>
 #include <variant>
 
@@ -52,7 +53,9 @@ class Unopened { };
 class Opened {
 public:
 	constexpr explicit Opened(i8 x) : value_{ x } {
-		assert(x >= 0 && x <= 8);
+		if (!(x >= 0 && x <= 8)) {
+			throw std::out_of_range{ "sweep::util::state::Opened::Opened()" };
+		}
 	}
 
 	constexpr operator i8() const noexcept {
