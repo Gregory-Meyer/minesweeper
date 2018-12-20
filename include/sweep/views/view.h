@@ -35,21 +35,26 @@
 #ifndef SWEEP_VIEWS_VIEW_H
 #define SWEEP_VIEWS_VIEW_H
 
-#include <sweep/utility.h>
+#include <sweep/util.h>
 
 #include <iosfwd>
 #include <vector>
 
 namespace sweep::views {
+namespace view {
 
 class View {
 public:
-	virtual ~View() = default;
+    virtual ~View() = default;
 
-	virtual void update_opened() = 0;
+    void update_opened();
 
 private:
 };
+
+} // namespace view
+
+using view::View;
 
 } // namespace sweep::views
 

@@ -37,9 +37,9 @@
 #include <iostream>
 
 int main() {
-	using namespace sweep::literals;
+    using namespace sweep::literals;
 
-	constexpr sweep::State state{ sweep::Opened{ 7_i8 } };
+    constexpr sweep::State state{ sweep::Opened{ 7_i8 } };
 
-	std::cout << "state = " << state << '\n';
+    std::cout << "state = " << state << '\n';
 }

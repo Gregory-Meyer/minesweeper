@@ -61,51 +61,51 @@ using f64 = double;
 inline namespace literals {
 
 constexpr u8 operator""_u8(unsigned long long x) noexcept {
-	return gsl::narrow_cast<u8>(x);
+    return gsl::narrow_cast<u8>(x);
 }
 
 constexpr u16 operator""_u16(unsigned long long x) noexcept {
-	return gsl::narrow_cast<u16>(x);
+    return gsl::narrow_cast<u16>(x);
 }
 
 constexpr u32 operator""_u32(unsigned long long x) noexcept {
-	return gsl::narrow_cast<u32>(x);
+    return gsl::narrow_cast<u32>(x);
 }
 
 constexpr u64 operator""_u64(unsigned long long x) noexcept {
-	return gsl::narrow_cast<u64>(x);
+    return gsl::narrow_cast<u64>(x);
 }
 
 constexpr i8 operator""_i8(unsigned long long x) noexcept {
-	return gsl::narrow_cast<i8>(x);
+    return gsl::narrow_cast<i8>(x);
 }
 
 constexpr i16 operator""_i16(unsigned long long x) noexcept {
-	return gsl::narrow_cast<i16>(x);
+    return gsl::narrow_cast<i16>(x);
 }
 
 constexpr i32 operator""_i32(unsigned long long x) noexcept {
-	return gsl::narrow_cast<i32>(x);
+    return gsl::narrow_cast<i32>(x);
 }
 
 constexpr i64 operator""_i64(unsigned long long x) noexcept {
-	return gsl::narrow_cast<i64>(x);
+    return gsl::narrow_cast<i64>(x);
 }
 
 constexpr usize operator""_usize(unsigned long long x) noexcept {
-	return gsl::narrow_cast<usize>(x);
+    return gsl::narrow_cast<usize>(x);
 }
 
 constexpr isize operator""_isize(unsigned long long x) noexcept {
-	return gsl::narrow_cast<isize>(x);
+    return gsl::narrow_cast<isize>(x);
 }
 
 constexpr f32 operator""_f32(long double x) noexcept {
-	return gsl::narrow_cast<f32>(x);
+    return gsl::narrow_cast<f32>(x);
 }
 
 constexpr f64 operator""_f64(long double x) noexcept {
-	return gsl::narrow_cast<f64>(x);
+    return gsl::narrow_cast<f64>(x);
 }
 
 } // inline namespace literals

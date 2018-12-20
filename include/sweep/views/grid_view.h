@@ -38,8 +38,13 @@
 #include <sweep/views/view.h>
 
 namespace sweep::views {
+namespace grid_view {
 
 class GridView : public View { };
+
+} // namespace grid_view
+
+using grid_view::GridView;
 
 } // namespace sweep::views
 

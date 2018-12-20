@@ -38,22 +38,22 @@
 
 namespace sweep::util::state {
 
-std::ostream& operator<<(std::ostream &os, Unopened) {
-	return os << "Unopened";
+std::ostream& operator<<(std::ostream &os, const Unopened&) {
+    return os << "Unopened";
 }
 
-std::ostream& operator<<(std::ostream &os, Opened o) {
-	return os << "Opened(" << static_cast<int>(o.get()) << ')';
+std::ostream& operator<<(std::ostream &os, const Opened &o) {
+    return os << "Opened(" << static_cast<int>(o.get()) << ')';
 }
 
-std::ostream& operator<<(std::ostream &os, Mine) {
-	return os << "Mine";
+std::ostream& operator<<(std::ostream &os, const Mine&) {
+    return os << "Mine";
 }
 
-std::ostream& operator<<(std::ostream &os, State state) {
-	state.visit([&os](auto x) { os << x; });
+std::ostream& operator<<(std::ostream &os, const State &state) {
+    state.visit([&os](const auto &x) { os << x; });
 
-	return os;
+    return os;
 }
 
 } // namespace sweep::util::state;

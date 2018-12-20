@@ -52,22 +52,22 @@ class Unopened { };
 
 class Opened {
 public:
-	constexpr explicit Opened(i8 x) : value_{ x } {
-		if (!(x >= 0 && x <= 8)) {
-			throw std::out_of_range{ "sweep::util::state::Opened::Opened()" };
-		}
-	}
+    constexpr explicit Opened(i8 x) : value_{ x } {
+        if (!(x >= 0 && x <= 8)) {
+            throw std::out_of_range{ "sweep::util::state::Opened::Opened()" };
+        }
+    }
 
-	constexpr operator i8() const noexcept {
-		return get();
-	}
+    constexpr operator i8() const noexcept {
+        return get();
+    }
 
-	constexpr i8 get() const noexcept {
-		return value_;
-	}
+    constexpr i8 get() const noexcept {
+        return value_;
+    }
 
 private:
-	i8 value_;
+    i8 value_;
 };
 
 class Mine { };
@@ -84,62 +84,58 @@ struct IsNothrowInvocableUnionType : std::conjunction<std::is_nothrow_invocable<
 template <typename C, typename ...Ts>
 inline constexpr bool IS_NOTHROW_INVOCABLE_UNION = IsNothrowInvocableUnionType<C, Ts...>::value;
 
-template <typename C, typename ...Ts>
-struct CommonInvokeResultType : std::common_type<std::invoke_result_t<C, Ts>...> { };
-
-template <typename C, typename ...Ts>
-using CommonInvokeResult = typename CommonInvokeResultType<C, Ts...>::type;
-
 template<class... Ts> struct Overload : Ts... { using Ts::operator()...; };
 
 template<class... Ts> Overload(Ts...) -> Overload<Ts...>;
 
 class State {
 public:
-	constexpr explicit State(Unopened) noexcept : data_{ Unopened{ } } { }
+    constexpr explicit State(const Unopened&) noexcept : data_{ Unopened{ } } { }
 
-	constexpr explicit State(Opened opened) noexcept : data_{ opened } { }
+    constexpr explicit State(const Opened &opened) noexcept : data_{ opened } { }
 
-	constexpr explicit State(Mine) noexcept : data_{ Mine{ } } { }
+    constexpr explicit State(const Mine&) noexcept : data_{ Mine{ } } { }
 
-	template <
-		typename C, std::enable_if_t<IS_INVOCABLE_UNION<C, Unopened, Opened, Mine>, int> = 0
-	>
-	constexpr CommonInvokeResult<C, Unopened, Opened, Mine> visit(C &&callable) const
-	noexcept(IS_NOTHROW_INVOCABLE_UNION<C, Unopened, Opened, Mine>) {
-		return std::visit(std::forward<C>(callable), data_);
-	}
+    template <
+        typename C,
+        std::enable_if_t<IS_INVOCABLE_UNION<C, const Unopened&, const Opened&,
+                                            const Mine&>, int> = 0
+    >
+    constexpr decltype(auto) visit(C &&callable) const
+    noexcept(IS_NOTHROW_INVOCABLE_UNION<C, const Unopened&, const Opened&, const Mine&>) {
+        return std::visit(std::forward<C>(callable), data_);
+    }
 
-	constexpr bool is_unopened() const noexcept {
-		return std::holds_alternative<Unopened>(data_);
-	}
+    constexpr bool is_unopened() const noexcept {
+        return std::holds_alternative<Unopened>(data_);
+    }
 
-	constexpr bool is_opened() const noexcept {
-		return std::holds_alternative<Opened>(data_);
-	}
+    constexpr bool is_opened() const noexcept {
+        return std::holds_alternative<Opened>(data_);
+    }
 
-	constexpr bool is_mine() const noexcept {
-		return std::holds_alternative<Mine>(data_);
-	}
+    constexpr bool is_mine() const noexcept {
+        return std::holds_alternative<Mine>(data_);
+    }
 
-	constexpr std::optional<Opened> as_opened() const noexcept {
-		return visit(Overload{
-			[](Opened o) -> std::optional<Opened> { return { o }; },
-			[](auto) -> std::optional<Opened> { return std::nullopt; }
-		});
-	}
+    constexpr const Opened* as_opened() const noexcept {
+        return visit(Overload{
+            [](const Opened &o) { return &o; },
+            [](auto) { return nullptr; }
+        });
+    }
 
 private:
-	std::variant<Unopened, Opened, Mine> data_;
+    std::variant<Unopened, Opened, Mine> data_;
 };
 
-std::ostream& operator<<(std::ostream &os, Unopened);
+std::ostream& operator<<(std::ostream &os, const Unopened&);
 
-std::ostream& operator<<(std::ostream &os, Opened o);
+std::ostream& operator<<(std::ostream &os, const Opened &o);
 
-std::ostream& operator<<(std::ostream &os, Mine);
+std::ostream& operator<<(std::ostream &os, const Mine&);
 
-std::ostream& operator<<(std::ostream &os, State state);
+std::ostream& operator<<(std::ostream &os, const State &state);
 
 } // namespace state
 
