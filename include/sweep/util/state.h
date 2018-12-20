@@ -120,8 +120,8 @@ public:
 
     constexpr const Opened* as_opened() const noexcept {
         return visit(Overload{
-            [](const Opened &o) { return &o; },
-            [](auto) { return nullptr; }
+            [](const Opened &o) -> const Opened* { return &o; },
+            [](auto) -> const Opened* { return nullptr; }
         });
     }
 

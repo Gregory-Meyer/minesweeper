@@ -32,37 +32,20 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SWEEP_VIEWS_VIEW_H
-#define SWEEP_VIEWS_VIEW_H
+#include <sweep/views/view.h>
 
-#include <sweep/util.h>
+namespace sweep::views::view {
 
-#include <iosfwd>
-#include <vector>
+void View::update(const Point &location, const State &state) {
+    do_update(location, state);
+}
 
-namespace sweep::views {
-namespace view {
+std::ostream& View::draw_on(std::ostream &os) const {
+    return do_draw_on(os);
+}
 
-class View {
-public:
-    virtual ~View() = default;
+std::ostream& operator<<(std::ostream &os, const View &view) {
+    return view.draw_on(os);
+}
 
-    void update(const Point &location, const State &state);
-
-    std::ostream& draw_on(std::ostream &os) const;
-
-private:
-	virtual void do_update(const Point &location, const State &state) = 0;
-
-	virtual std::ostream& do_draw_on(std::ostream &os) const = 0;
-};
-
-std::ostream& operator<<(std::ostream &os, const View &view);
-
-} // namespace view
-
-using view::View; using view::operator<<;
-
-} // namespace sweep::views
-
-#endif
+} // namespace sweep::views::view

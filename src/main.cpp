@@ -32,14 +32,16 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#include <sweep/util.h>
+#include <sweep/views.h>
 
 #include <iostream>
 
 int main() {
     using namespace sweep::literals;
 
-    constexpr sweep::State state{ sweep::Opened{ 7_i8 } };
+    sweep::GridView view{ 5, 5 };
+    view.update({ 1, 1 }, sweep::State{ sweep::Opened{ 5 } });
+    view.update({ 3, 3 }, sweep::State{ sweep::Mine{ } });
 
-    std::cout << "state = " << state << '\n';
+    std::cout << view << '\n';
 }

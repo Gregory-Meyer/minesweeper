@@ -32,37 +32,44 @@
 // ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef SWEEP_VIEWS_VIEW_H
-#define SWEEP_VIEWS_VIEW_H
+#ifndef SWEEP_UTIL_GEOMETRY_H
+#define SWEEP_UTIL_GEOMETRY_H
 
-#include <sweep/util.h>
+#include <sweep/util/types.h>
 
-#include <iosfwd>
-#include <vector>
+namespace sweep::util {
+namespace geometry {
 
-namespace sweep::views {
-namespace view {
+struct Point {
+    constexpr Point(isize i, isize j) noexcept : i{ i }, j{ j } { }
 
-class View {
-public:
-    virtual ~View() = default;
-
-    void update(const Point &location, const State &state);
-
-    std::ostream& draw_on(std::ostream &os) const;
-
-private:
-	virtual void do_update(const Point &location, const State &state) = 0;
-
-	virtual std::ostream& do_draw_on(std::ostream &os) const = 0;
+    isize i; // row
+    isize j; // column
 };
 
-std::ostream& operator<<(std::ostream &os, const View &view);
+struct Vector {
+    constexpr Vector(isize x, isize y) noexcept : x{ x }, y{ y } { }
 
-} // namespace view
+    isize x;
+    isize y;
+};
 
-using view::View; using view::operator<<;
+constexpr Point operator+(const Point &lhs, const Vector &rhs) noexcept {
+    return { lhs.i + rhs.y, lhs.j + rhs.x };
+}
 
-} // namespace sweep::views
+constexpr Point operator+(const Vector &lhs, const Point &rhs) noexcept {
+    return rhs + lhs;
+}
+
+constexpr Vector operator-(const Point &lhs, const Point &rhs) noexcept {
+    return { lhs.j - rhs.j, lhs.i - rhs.i };
+}
+
+} // namespace geometry
+
+using geometry::Point; using geometry::Vector;
+
+} // namespace sweep::util
 
 #endif

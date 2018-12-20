@@ -37,10 +37,30 @@
 
 #include <sweep/views/view.h>
 
+#include <vector>
+
 namespace sweep::views {
 namespace grid_view {
 
-class GridView : public View { };
+class GridView : public View {
+public:
+    GridView(isize num_rows, isize num_cols);
+
+private:
+    using Grid = std::vector<State>;
+
+    struct Helpers;
+
+    friend Helpers;
+
+    void do_update(const Point &location, const State &state) override;
+
+    std::ostream& do_draw_on(std::ostream &os) const override;
+
+    Grid grid_;
+    isize rows_;
+    isize cols_;
+};
 
 } // namespace grid_view
 

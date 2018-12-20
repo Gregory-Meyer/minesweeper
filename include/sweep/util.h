@@ -35,6 +35,7 @@
 #ifndef SWEEP_UTIL_H
 #define SWEEP_UTIL_H
 
+#include <sweep/util/geometry.h>
 #include <sweep/util/state.h>
 #include <sweep/util/types.h>
 

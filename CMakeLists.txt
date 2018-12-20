@@ -12,5 +12,6 @@ find_package(Eigen3 REQUIRED NO_MODULE)
 include_directories(include/ external/GSL/include/ ${Qt5_INCLUDE_DIRS}
                     ${Eigen3_INCLUDE_DIRS})
 
-add_executable(minesweeper src/main.cpp src/util/state.cpp)
+add_executable(minesweeper src/main.cpp src/util/state.cpp src/views/view.cpp
+                           src/views/grid_view.cpp)
 target_link_libraries(minesweeper ${Qt5_LIBRARIES} ${Eigen3_LIBRARIES})
